@@ -3,9 +3,11 @@ package main
 import (
 	"context"
 	"fmt"
+	"log"
 
 	simulationpb "git.risenlighten.com/lasvsim/process_task/api/cosim/v1"
 	grpc "google.golang.org/grpc"
+	"google.golang.org/grpc/credentials"
 	"google.golang.org/grpc/metadata"
 )
 
@@ -14,8 +16,13 @@ func main() {
 }
 
 func run() {
+	// 加载服务器证书
+	certificate, err := credentials.NewClientTLSFromFile("qianxing-grpc.risenlighten.com_public.crt", "qianxing-grpc.risenlighten.com")
+	if err != nil {
+		log.Fatalf("无法加载服务器证书: %v", err)
+	}
 	// Connect to the gRPC server
-	conn, err := grpc.Dial("qianxing-grpc.risenlighten.com:80", grpc.WithInsecure())
+	conn, err := grpc.Dial("qianxing-grpc.risenlighten.com:443", grpc.WithTransportCredentials(certificate))
 	if err != nil {
 		panic(err)
 	}
