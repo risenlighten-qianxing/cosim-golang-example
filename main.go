@@ -16,6 +16,14 @@ func main() {
 }
 
 func run() {
+	// 非TLS方式连接
+	// Connect to the gRPC server
+	// conn, err := grpc.Dial("qianxing-grpc.risenlighten.com:80", grpc.WithTransportCredentials(insecure.NewCredentials()))
+	// if err != nil {
+	// 	panic(err)
+	// }
+	// defer conn.Close()
+
 	// 加载服务器证书
 	certificate, err := credentials.NewClientTLSFromFile("qianxing-grpc.risenlighten.com_public.crt", "qianxing-grpc.risenlighten.com")
 	if err != nil {
